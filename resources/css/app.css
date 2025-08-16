@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Couleurs custom */
+:root{
+  --gold:#FFD700;
+  --rich-black:#0A0A0A;
+  --violet:#6C63FF;
+}
+
+body { font-family: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif; }
+.bg-rich-black { background: var(--rich-black); }
+.text-gold { color: var(--gold); }
+
+/* Sections & containers */
+.section { @apply py-20; }
+.section-alt { @apply py-20 bg-white/5; }
+.container { @apply max-w-7xl mx-auto px-6; }
+
+.section-title {
+  font-family: 'Montserrat', sans-serif;
+  @apply text-3xl md:text-4xl font-black tracking-tight;
+  background: linear-gradient(90deg,var(--gold),#fff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.section-subtitle { @apply text-white/70 max-w-3xl mx-auto text-center mt-3; }
+
+/* Hero */
+.bg-hero {
+  background-image: radial-gradient(1200px 600px at 10% 10%, rgba(255,215,0,0.06), transparent),
+                    radial-gradient(1000px 500px at 90% 90%, rgba(108,99,255,0.12), transparent),
+                    linear-gradient(180deg, #0A0A0A 0%, #000 100%);
+}
+.hero-title {
+  font-family: 'Montserrat', sans-serif;
+  @apply text-4xl md:text-6xl font-extrabold;
+}
+.gradient-royal {
+  background: linear-gradient(90deg, #9EA0FF, #FFFFFF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Cartes & UI */
+.card {
+  @apply rounded-2xl bg-black/40 border border-white/10 p-6;
+}
+.card-hero { @apply rounded-2xl overflow-hidden border border-white/10; }
+.card-title { @apply mt-3 text-lg font-bold; }
+.card-desc { @apply mt-1 text-white/70; }
+
+.feature:hover { box-shadow: 0 0 0 1px rgba(255,255,255,0.08) inset, 0 12px 30px rgba(0,0,0,0.5); transform: translateY(-2px); transition: 200ms; }
+
+/* Boutons */
+.btn-gold { @apply inline-flex items-center justify-center px-5 py-3 rounded-full font-semibold text-black; background: var(--gold); }
+.btn-outline { @apply inline-flex items-center justify-center px-5 py-3 rounded-full border border-white/20 text-white hover:bg-white/10; }
+.btn-ghost { @appl
