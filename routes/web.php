@@ -8,6 +8,9 @@ use App\Http\Controllers\Admin\PresenceController;
 use App\Http\Controllers\Admin\DossierController;
 use App\Http\Controllers\Admin\ClassController;
 use App\Http\Controllers\Admin\TeacherController;
+use App\Http\Controllers\Admin\AssignmentController;
+use App\Http\Controllers\Admin\SubjectController;
+use App\Http\Controllers\Admin\SubmissionController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -79,8 +82,30 @@ Route::prefix('admin')->middleware(['auth', 'superadmin'])->group(function () {
 	    Route::post('classes/{class}/assign-teachers', [ClassController::class, 'storeTeachers'])->name('classes.store.teachers');		
 
 	    Route::resource('teachers', \App\Http\Controllers\Admin\TeacherController::class);
+	    Route::get('/teachers/{teacher}', [TeacherController::class, 'show'])->name('teachers.show');
+		Route::put('/teachers/{id}/classes', [TeacherController::class, 'updateClasses'])
+		->name('teachers.updateClasses');
+
+		Route::get('/class', [AssignmentController::class, 'index'])->name('assignments.index');
+		Route::get('/{assignment}', [AssignmentController::class, 'show'])->name('assignments.show');
+		Route::get('/assignments/create', [AssignmentController::class, 'create'])->name('assignments.create');
+		Route::post('/store', [AssignmentController::class, 'store'])->name('assignments.store');
+		Route::post('/{assignment}/grade/{student}', [AssignmentController::class, 'updateGrade'])->name('assignments.grade');;
 	});
 
+	Route::resource('subjects', SubjectController::class)->names('subjects');
+
+    Route::get('assignments', [SubmissionController::class, 'studentIndex'])->name('student.assignments.index');
+    Route::get('assignments/{assignment}', [SubmissionController::class, 'studentShow'])->name('student.assignments.show');
+    Route::post('assignments/{assignment}/submit', [SubmissionController::class, 'submit'])->name('student.assignments.submit');
+
+	Route::prefix('teacher')->name('teacher.')->middleware('auth:teacher')->group(function () {
+	    Route::get('assignments/{assignment}/submissions', [SubmissionController::class, 'teacherSubmissions'])->name('assignments.submissions');
+	    Route::post('assignments/{assignment}/submissions/{submission}/grade', [SubmissionController::class, 'grade'])->name('assignments.submissions.grade');
+	});
+
+    Route::get('assignments/{assignment}/submissions', [SubmissionController::class, 'teacherSubmissions'])->name('assignments.submissions');
+    Route::post('assignments/{assignment}/submissions/{submission}/grade', [SubmissionController::class, 'grade'])->name('assignments.submissions.grade');
 
 });
 

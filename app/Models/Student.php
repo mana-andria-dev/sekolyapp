@@ -3,9 +3,15 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
 class Student extends Model
 {
+    use HasFactory;
+    use Notifiable;
+    
     protected $fillable = [
         'tenant_id',
         'first_name',
@@ -18,6 +24,8 @@ class Student extends Model
         'enrollment_date',
         'status',
     ];
+
+    protected $hidden = ['password', 'remember_token'];
 
     public function tenant()
     {
@@ -48,6 +56,18 @@ class Student extends Model
     {
         return $this->belongsToMany(Classe::class, 'class_student', 'student_id', 'class_id')
                     ->withTimestamps();
+    }
+
+    public function assignments()
+    {
+        return $this->belongsToMany(Assignment::class, 'assignment_student')
+                    ->withPivot(['status', 'grade', 'submitted_at'])
+                    ->withTimestamps();
+    }    
+    
+    public function submissions()
+    {
+        return $this->hasMany(Submission::class);
     }
     
 }

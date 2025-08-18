@@ -40,6 +40,16 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'api' => [
+            'driver' => 'token',
+            'provider' => 'users',
+            'hash' => false,
+        ],
+
+        'student' => [
+            'driver' => 'session',
+            'provider' => 'students', // On va créer ce provider
+        ],        
     ],
 
     /*
@@ -64,6 +74,11 @@ return [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
+
+        'students' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Student::class,
+        ],        
 
         // 'users' => [
         //     'driver' => 'database',

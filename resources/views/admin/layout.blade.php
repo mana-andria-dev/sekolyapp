@@ -45,6 +45,21 @@
                         🏫 Classes
                     </a>
                 </li>
+
+                <li class="nav-item mb-2">
+                    <a href="{{ route('admin.assignments.index') }}" 
+                       class="nav-link text-white {{ request()->routeIs('admin.assignments.*') ? 'active bg-primary' : '' }}">
+                        📝 Devoirs
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="{{ route('subjects.index') }}"
+                       class="nav-link text-white {{ request()->routeIs('subjects.*') ? 'active bg-primary' : '' }}">
+                        📚 Matières
+                    </a>
+                </li>
+
             </ul>
 
         </div>

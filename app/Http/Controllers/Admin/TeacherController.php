@@ -17,7 +17,7 @@ class TeacherController extends Controller
             $query->where('tenant_id', $request->tenant_id);
         }
 
-        $teachers = $query->paginate(20);
+        $teachers = Teacher::with('tenant')->latest()->paginate(20);
         $tenants = Tenant::all();
 
         return view('admin.teachers.index', compact('teachers', 'tenants'));
@@ -93,4 +93,22 @@ class TeacherController extends Controller
         $teacher->delete();
         return redirect()->route('admin.teachers.index')->with('success', 'Enseignant supprimé avec succès.');
     }
+
+    public function show($id)
+    {
+        // $teacher = Teacher::with(['classes.students'])->findOrFail($id);
+        $teacher = Teacher::with([
+            'classes.students',
+            'assignments.submissions.student'
+        ])->findOrFail($id);
+        return view('admin.teachers.show', compact('teacher'));
+    }
+
+    public function updateClasses(Request $request, $id)
+    {
+        $teacher = Teacher::findOrFail($id);
+        $teacher->classes()->sync($request->classes ?? []);
+        return back()->with('success', 'Classes mises à jour avec succès.');
+    }    
+
 }

@@ -5,38 +5,30 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Teacher extends Model
+class Subject extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'tenant_id',
-        'first_name',
-        'last_name',
-        'email',
-        'phone',
-        'subject',
-        'bio',
-        'photo_path',
-    ];
+    protected $fillable = ['tenant_id', 'name', 'description'];
 
+    // Une matière appartient à plusieurs classes
     public function classes()
     {
         return $this->belongsToMany(
             Classe::class,
-            'class_teacher',
-            'teacher_id',
+            'class_subject',
+            'subject_id',
             'class_id'
         );
     }
 
-    public function tenant()
-    {
+    public function tenant() {
         return $this->belongsTo(Tenant::class);
-    }
+    }    
 
+    // Une matière peut avoir plusieurs devoirs
     public function assignments()
     {
         return $this->hasMany(Assignment::class);
-    }        
+    }
 }

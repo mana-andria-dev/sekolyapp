@@ -48,6 +48,7 @@
                 <thead>
                     <tr>
                         <th>Photo</th>
+                        <th>Établissement</th>
                         <th>Nom</th>
                         <th>Email</th>
                         <th>Téléphone</th>
@@ -65,11 +66,15 @@
                                     <span class="text-muted">-</span>
                                 @endif
                             </td>
+                            <td>{{ $teacher->tenant?->name ?? '-' }}</td>
                             <td>{{ $teacher->first_name }} {{ $teacher->last_name }}</td>
                             <td>{{ $teacher->email }}</td>
                             <td>{{ $teacher->phone ?? '-' }}</td>
                             <td>{{ $teacher->subject ?? '-' }}</td>
                             <td>
+                                <a href="{{ route('admin.teachers.show', $teacher) }}" class="btn btn-sm btn-info">
+                                    <i class="bi bi-eye"></i>
+                                </a>                                
                                 <a href="{{ route('admin.teachers.edit', $teacher) }}" class="btn btn-sm btn-warning">
                                     <i class="bi bi-pencil"></i>
                                 </a>
