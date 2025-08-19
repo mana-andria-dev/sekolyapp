@@ -164,6 +164,7 @@
               <option value="">Sélectionner</option>
               <option value="ecole">École</option>
               <option value="college">Collège</option>
+              <option value="lycee">Lycée</option>
               <option value="universite">Université</option>
             </select>
           </div>
