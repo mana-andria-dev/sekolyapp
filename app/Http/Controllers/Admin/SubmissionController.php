@@ -55,6 +55,31 @@ class SubmissionController extends Controller
         return back()->with('success','Devoir soumis avec succès !');
     }
 
+    public function submitForStudent(Request $request, Student $student, Assignment $assignment)
+    {
+        $request->validate([
+            'file' => 'required|file|mimes:pdf,doc,docx,jpg,png|max:5120',
+        ]);
+
+        $submission = Submission::updateOrCreate(
+            [
+                'assignment_id' => $assignment->id,
+                'student_id'    => $student->id,
+            ],
+            []
+        );
+
+        if ($request->hasFile('file')) {
+            if ($submission->file_path) {
+                Storage::delete($submission->file_path);
+            }
+            $submission->file_path = $request->file('file')->store('submissions');
+            $submission->save();
+        }
+
+        return back()->with('success', "✅ Devoir soumis pour {$student->first_name} {$student->last_name}");
+    }
+
     // Enseignant : liste des soumissions
     public function teacherSubmissions(Assignment $assignment)
     {

@@ -33,6 +33,11 @@
         <li class="nav-item" role="presentation">
             <button class="nav-link" id="assignments-tab" data-bs-toggle="tab" data-bs-target="#assignments" type="button" role="tab">Devoirs</button>
         </li>
+        <li class="nav-item" role="presentation">
+            <button class="nav-link" id="docs-tab" data-bs-toggle="tab" data-bs-target="#docs" type="button" role="tab">
+                📄 Documents
+            </button>
+        </li>        
     </ul>
 
     <div class="tab-content mt-4">
@@ -79,10 +84,11 @@
                                     <span class="badge bg-success">✅ Soumis</span>
                                     <a href="{{ asset('storage/'.$submission->file_path) }}" target="_blank" class="btn btn-sm btn-info ms-2">📄 Voir</a>
                                 @else
-                                    <form action="{{ route('student.assignments.submit', $assignment) }}" method="POST" enctype="multipart/form-data" class="d-inline-block">
+                                    <form action="{{ route('admin.students.assignments.submit', [$student->id, $assignment->id]) }}" 
+                                          method="POST" enctype="multipart/form-data" class="d-inline-block">
                                         @csrf
                                         <input type="file" name="file" class="form-control form-control-sm d-inline-block w-auto">
-                                        <button type="submit" class="btn btn-sm btn-primary">➤ Soumettre</button>
+                                        <button type="submit" class="btn btn-sm btn-primary">➤ Soumettre pour lui</button>
                                     </form>
                                 @endif
                             </div>
@@ -92,6 +98,25 @@
                     @endforelse
                 </ul>
             @endforeach
+        </div>
+
+        <div class="tab-pane fade" id="docs" role="tabpanel" aria-labelledby="docs-tab">
+            <div class="list-group">
+                <a href="{{ route('students.documents.certificat', $student) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Certificat de scolarité
+                    <span class="badge bg-primary">Télécharger</span>
+                </a>
+
+                <a href="{{ route('students.documents.attestation', $student) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Attestation
+                    <span class="badge bg-primary">Télécharger</span>
+                </a>
+
+                <a href="{{ route('students.documents.releve', $student) }}" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                    Relevé de notes
+                    <span class="badge bg-primary">Télécharger</span>
+                </a>
+            </div>
         </div>
 
     </div>

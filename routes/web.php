@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\AssignmentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\SubmissionController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\StudentDocumentController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -101,6 +102,8 @@ Route::prefix('admin')->middleware(['auth', 'superadmin'])->group(function () {
     Route::get('assignments', [SubmissionController::class, 'studentIndex'])->name('student.assignments.index');
     Route::get('assignments/{assignment}', [SubmissionController::class, 'studentShow'])->name('student.assignments.show');
     Route::post('assignments/{assignment}/submit', [SubmissionController::class, 'submit'])->name('student.assignments.submit');
+    Route::post('/students/{student}/assignments/{assignment}/submit', [SubmissionController::class, 'submitForStudent'])->name('admin.students.assignments.submit');
+
 
 	Route::prefix('teacher')->name('teacher.')->middleware('auth:teacher')->group(function () {
 	    Route::get('assignments/{assignment}/submissions', [SubmissionController::class, 'teacherSubmissions'])->name('assignments.submissions');
@@ -115,6 +118,10 @@ Route::prefix('admin')->middleware(['auth', 'superadmin'])->group(function () {
 
     Route::get('etablissement', [TenantAdminController::class, 'index'])->name('admin.etablissement');
 
+	Route::get('/students/{student}/documents/certificat', [StudentDocumentController::class, 'certificat'])->name('students.documents.certificat');
+	Route::get('/students/{student}/documents/attestation', [StudentDocumentController::class, 'attestation'])->name('students.documents.attestation');
+	Route::get('/students/{student}/documents/releve-notes', [StudentDocumentController::class, 'releve'])->name('students.documents.releve');
+    
 });
 
 require __DIR__.'/auth.php';

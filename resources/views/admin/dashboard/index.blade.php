@@ -55,16 +55,6 @@
         </div>
     </div>
 
-    {{-- Graphique des élèves par mois --}}
-    <div class="card shadow-sm border-0 rounded-3">
-        <div class="card-header bg-light fw-bold">
-            <i class="bi bi-graph-up me-2 text-primary"></i> Inscriptions d'élèves par mois
-        </div>
-        <div class="card-body">
-            <canvas id="studentsChart" height="100"></canvas>
-        </div>
-    </div>
-
 </div>
 @endsection
 

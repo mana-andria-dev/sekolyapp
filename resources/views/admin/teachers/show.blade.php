@@ -95,45 +95,8 @@
                             <p>{{ $assignment->description }}</p>
 
                             <h6>Soumissions :</h6>
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th>Élève</th>
-                                        <th>Fichier / Réponse</th>
-                                        <th>Note</th>
-                                        <th>Feedback</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @forelse($assignment->submissions as $submission)
-                                        <tr>
-                                            <td>{{ $submission->student->first_name }} {{ $submission->student->last_name }}</td>
-                                            <td>
-                                                @if($submission->file_path)
-                                                    <a href="{{ asset('storage/'.$submission->file_path) }}" target="_blank">📄 Voir</a>
-                                                @else
-                                                    {{ $submission->answer ?? '—' }}
-                                                @endif
-                                            </td>
-                                            <td>{{ $submission->grade ?? '—' }}</td>
-                                            <td>{{ $submission->feedback ?? '—' }}</td>
-                                            <td>
-                                                <form action="{{ route('assignments.submissions.grade', [$assignment, $submission]) }}" method="POST">
-                                                    @csrf
-                                                    <input type="number" name="grade" min="0" max="20" value="{{ $submission->grade }}" style="width:60px;">
-                                                    <input type="text" name="feedback" value="{{ $submission->feedback }}" placeholder="Feedback">
-                                                    <button type="submit" class="btn btn-sm btn-primary">💾</button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <td colspan="5" class="text-center">Aucune soumission</td>
-                                        </tr>
-                                    @endforelse
-                                </tbody>
-                            </table>
+                            @include('admin.assignments._submissions_table', ['submissions' => $assignment->submissions])
+
                         </div>
                     </div>
                 @empty
