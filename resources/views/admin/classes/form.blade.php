@@ -17,6 +17,13 @@
                     <i class="bi bi-people"></i> Élèves assignés
                 </button>
             </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="subjects-tab" data-bs-toggle="tab"
+                        data-bs-target="#subjects" type="button" role="tab" aria-controls="subjects"
+                        aria-selected="false">
+                    <i class="bi bi-journal-bookmark"></i> Matières
+                </button>
+            </li>
         </ul>
     </div>
 
@@ -99,6 +106,23 @@
             @endif
         </div>
     </div>
+
+    <div class="tab-pane fade" id="subjects" role="tabpanel" aria-labelledby="subjects-tab">
+        <div class="mb-3 mt-3">
+            <label class="form-label fw-bold">Sélectionner les matières :</label>
+            <select name="subjects[]" class="form-select" multiple>
+                @foreach($subjects as $subject)
+                    <option value="{{ $subject->id }}"
+                        {{ isset($class) && $class->subjects->contains($subject->id) ? 'selected' : '' }}>
+                        {{ $subject->name }}
+                    </option>
+                @endforeach
+            </select>
+            <small class="text-muted">Maintenir CTRL (Windows) ou CMD (Mac) pour sélectionner plusieurs matières</small>
+            @error('subjects') <div class="text-danger small">{{ $message }}</div> @enderror
+        </div>
+    </div>
+
 
     <div class="card-footer text-end">
         <button type="submit" class="btn btn-success">

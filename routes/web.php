@@ -11,6 +11,7 @@ use App\Http\Controllers\Admin\TeacherController;
 use App\Http\Controllers\Admin\AssignmentController;
 use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\SubmissionController;
+use App\Http\Controllers\Admin\DashboardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -31,8 +32,10 @@ Route::get('/', function () {
 Route::get('/register-tenant', [TenantController::class,'create'])->name('tenant.create');
 Route::post('/register-tenant', [TenantController::class,'store'])->name('tenant.store');
 
+Route::get('/', [DashboardController::class, 'index'])->middleware(['auth', 'superadmin'])->name('admin.dashboard');
+Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'superadmin'])->name('admin.dashboard');
+
 Route::prefix('admin')->middleware(['auth', 'superadmin'])->group(function () {
-    Route::get('/', [TenantAdminController::class, 'index'])->name('admin.dashboard');
     Route::resource('tenants', TenantAdminController::class);
 
 	Route::resource('students', App\Http\Controllers\Admin\StudentController::class)
@@ -106,6 +109,11 @@ Route::prefix('admin')->middleware(['auth', 'superadmin'])->group(function () {
 
     Route::get('assignments/{assignment}/submissions', [SubmissionController::class, 'teacherSubmissions'])->name('assignments.submissions');
     Route::post('assignments/{assignment}/submissions/{submission}/grade', [SubmissionController::class, 'grade'])->name('assignments.submissions.grade');
+
+    Route::get('matiere', [ClassController::class, 'editSubjects'])->name('classes.editSubjects');
+    Route::post('matiere', [ClassController::class, 'updateSubjects'])->name('classes.updateSubjects');
+
+    Route::get('etablissement', [TenantAdminController::class, 'index'])->name('admin.etablissement');
 
 });
 

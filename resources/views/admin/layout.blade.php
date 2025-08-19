@@ -18,24 +18,33 @@
 
             {{-- Menu --}}
             <ul class="nav nav-pills flex-column mb-auto">
+
+                {{-- Dashboard --}}
                 <li class="nav-item mb-2">
                     <a href="{{ route('admin.dashboard') }}"
                        class="nav-link text-white {{ request()->routeIs('admin.dashboard') ? 'active bg-primary' : '' }}">
-                        <i class="bi bi-speedometer2 me-2"></i> Etablissement
+                        <i class="bi bi-speedometer2 me-2"></i> Dashboard
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="{{ route('admin.etablissement') }}"
+                       class="nav-link text-white {{ request()->routeIs('admin.etablissement') ? 'active bg-primary' : '' }}">
+                        🎓 Etablissement
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
                     <a href="{{ route('admin.students.index') }}"
                        class="nav-link text-white {{ request()->routeIs('admin.students.*') ? 'active bg-primary' : '' }}">
-                        🎓 Elèves
+                        🧑 Elèves
                     </a>
                 </li>
 
                 <li class="nav-item mb-2">
                     <a href="{{ route('admin.teachers.index') }}"
                        class="nav-link text-white {{ request()->routeIs('admin.teachers.*') ? 'active bg-primary' : '' }}">
-                        🧑 Enseignants
+                        👨‍🏫 Enseignants
                     </a>
                 </li>
 
@@ -59,6 +68,13 @@
                         📚 Matières
                     </a>
                 </li>
+
+                <!-- <li class="nav-item mb-2">
+                    <a href="{{ route('classes.editSubjects') }}"
+                       class="nav-link text-white {{ request()->routeIs('classes.*') ? 'active bg-primary' : '' }}">
+                        📌 Gérer les matières
+                    </a>
+                </li> -->
 
             </ul>
 

@@ -47,7 +47,7 @@
                             @foreach(App\Models\Classe::all() as $class)
                                 <option value="{{ $class->id }}" 
                                     {{ $teacher->classes->contains($class->id) ? 'selected' : '' }}>
-                                    {{ $class->name }}
+                                    ({{ $class->tenant->name }}) {{ $class->name }}
                                 </option>
                             @endforeach
                         </select>
