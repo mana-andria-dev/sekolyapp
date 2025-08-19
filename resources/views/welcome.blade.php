@@ -12,6 +12,19 @@
     </div>
 @endif
 
+@if ($errors->any())
+    <div class="container mt-4">
+        <div class="alert alert-danger alert-dismissible fade show shadow-lg border-0 rounded-3" role="alert">
+            <h5 class="fw-bold"><i class="bi bi-exclamation-triangle-fill me-2"></i> Erreurs rencontrées :</h5>
+            <ul class="mb-0">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Fermer"></button>
+        </div>
+    </div>
+@endif
 
 <!-- HERO PARALLAX -->
 <section class="d-flex align-items-center justify-content-center text-center section parallax" style="min-height:100vh; background-image:url('https://images.unsplash.com/photo-1596496057320-4f62f3f591f0?q=80&w=1600');">

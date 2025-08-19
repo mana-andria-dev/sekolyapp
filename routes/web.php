@@ -33,6 +33,7 @@ Route::get('/register-tenant', [TenantController::class,'create'])->name('tenant
 Route::post('/register-tenant', [TenantController::class,'store'])->name('tenant.store');
 
 Route::get('dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'superadmin'])->name('admin.dashboard');
+Route::get('/admin', [DashboardController::class, 'index'])->middleware(['auth', 'superadmin'])->name('admin.dashboard');
 
 Route::prefix('admin')->middleware(['auth', 'superadmin'])->group(function () {
     Route::resource('tenants', TenantAdminController::class);
