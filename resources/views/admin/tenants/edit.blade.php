@@ -18,6 +18,7 @@
                     <option value="">— Choisir —</option>
                     <option value="ecole" @selected($tenant->type === 'ecole')>École</option>
                     <option value="college" @selected($tenant->type === 'college')>Collège</option>
+                    <option value="lycee" @selected($tenant->type === 'lycee')>Lycée</option>
                     <option value="universite" @selected($tenant->type === 'universite')>Université</option>
                 </select>
             </div>

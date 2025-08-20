@@ -56,7 +56,7 @@ class TenantAdminController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'type' => 'required|in:ecole,college,universite',
+            'type' => 'required|in:ecole,college,lycee,universite',
             'email' => 'required|email|unique:tenants,email,' . $tenant->id,
             'phone' => 'nullable|string',
             'address' => 'nullable|string',
