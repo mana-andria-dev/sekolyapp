@@ -13,6 +13,9 @@ use App\Http\Controllers\Admin\SubjectController;
 use App\Http\Controllers\Admin\SubmissionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\StudentDocumentController;
+use App\Http\Controllers\Admin\EvaluationController;
+use App\Http\Controllers\Admin\GradeController;
+use App\Http\Controllers\Admin\ReportCardController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -122,6 +125,30 @@ Route::prefix('admin')->middleware(['auth', 'superadmin'])->group(function () {
 	Route::get('/students/{student}/documents/attestation', [StudentDocumentController::class, 'attestation'])->name('students.documents.attestation');
 	Route::get('/students/{student}/documents/releve-notes', [StudentDocumentController::class, 'releve'])->name('students.documents.releve');
     
+
+    Route::resource('evaluations', EvaluationController::class)->names('admin.evaluations');
+    
+    // Notes
+    Route::resource('grades', GradeController::class)->names('admin.grades')->except(['create', 'edit']);
+    Route::get('grades/create/{evaluation}', [GradeController::class, 'createForEvaluation'])
+         ->name('admin.grades.createForEvaluation');
+    Route::post('grades/store/{evaluation}', [GradeController::class, 'storeForEvaluation'])
+         ->name('admin.grades.storeForEvaluation');
+
+    // Bulletins
+    // Route::get('report-cards', [ReportCardController::class, 'index'])
+    //      ->name('admin.report_cards.index');
+    // Route::get('report-cards/{student}', [ReportCardController::class, 'show'])
+    //      ->name('admin.report_cards.show');         
+
+    Route::resource('report-cards', ReportCardController::class)->names('admin.report_cards');
+	Route::get('grades/{grade}/edit', [GradeController::class, 'edit'])
+	     ->name('admin.grades.edit');
+
+	Route::put('grades/{grade}', [GradeController::class, 'update'])
+	     ->name('admin.grades.update');
+    
+
 });
 
 require __DIR__.'/auth.php';

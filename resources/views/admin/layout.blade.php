@@ -69,6 +69,27 @@
                     </a>
                 </li>
 
+                <li class="nav-item mb-2">
+                    <a href="{{ route('admin.evaluations.index') }}"
+                       class="nav-link text-white {{ request()->routeIs('admin.evaluations.*') ? 'active bg-primary' : '' }}">
+                        📝 Évaluations
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="{{ route('admin.grades.index') }}"
+                       class="nav-link text-white {{ request()->routeIs('admin.grades.*') ? 'active bg-primary' : '' }}">
+                        🏷️ Notes
+                    </a>
+                </li>
+
+                <li class="nav-item mb-2">
+                    <a href="{{ route('admin.report_cards.index') }}"
+                       class="nav-link text-white {{ request()->routeIs('admin.report_cards.*') ? 'active bg-primary' : '' }}">
+                        📄 Bulletins
+                    </a>
+                </li>
+
                 <!-- <li class="nav-item mb-2">
                     <a href="{{ route('classes.editSubjects') }}"
                        class="nav-link text-white {{ request()->routeIs('classes.*') ? 'active bg-primary' : '' }}">

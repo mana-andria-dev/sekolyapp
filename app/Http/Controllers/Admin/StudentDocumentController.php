@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
+use App\Models\ReportCard;
 use Barryvdh\DomPDF\Facade\Pdf; // <--- importer la facade
 
 class StudentDocumentController extends Controller
@@ -22,10 +23,12 @@ class StudentDocumentController extends Controller
 
     public function releve(Student $student)
     {
-        $notes = $student->notes ?? collect(); 
+        $reportCards = ReportCard::with('evaluation.subject')
+                         ->where('student_id', $student->id)
+                         ->get();
 
-        $pdf = \PDF::loadView('pdf.releve', compact('student','notes'));
-        return $pdf->download("releve_notes_{$student->id}.pdf");
+        $pdf = PDF::loadView('pdf.releve', compact('student', 'reportCards'));
+        return $pdf->download("Releve_{$student->first_name}_{$student->last_name}.pdf");
     }
 
 }

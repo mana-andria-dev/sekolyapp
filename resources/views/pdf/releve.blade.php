@@ -2,57 +2,55 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Relevé de notes</title>
+    <title>Relevé de notes - {{ $student->first_name }} {{ $student->last_name }}</title>
     <style>
-        body { font-family: DejaVu Sans, sans-serif; margin: 40px; }
-        h1 { text-align: center; }
-        .student-info { margin-top: 20px; font-size: 14px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { border: 1px solid #333; padding: 8px; text-align: left; }
-        th { background-color: #f0f0f0; }
-        .signature { margin-top: 40px; text-align: right; }
+        body { font-family: DejaVu Sans, sans-serif; margin: 20px; }
+        header { text-align: center; margin-bottom: 30px; }
+        .logo { max-height: 80px; margin-bottom: 10px; }
+        h1 { font-size: 24px; margin: 0; }
+        h2 { font-size: 20px; margin: 5px 0 20px 0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border: 1px solid #000; padding: 8px; text-align: center; }
+        th { background-color: #f2f2f2; }
+        footer { margin-top: 30px; text-align: center; font-size: 12px; color: #555; }
     </style>
 </head>
 <body>
-    <h1>Relevé de notes</h1>
+    <header>
+        @if($student->tenant?->logo_path)
+            <img src="{{ public_path('storage/'.$student->tenant->logo_path) }}" class="logo" alt="Logo de l'école">
+        @endif
+        <h1>{{ $student->tenant->name }}</h1>
+        <p>{{ $student->tenant->address ?? '' }}</p>
+        <p>Téléphone : {{ $student->tenant->phone ?? '' }} | Email : {{ $student->tenant->email }}</p>
+    </header>
 
-    <div class="student-info">
-        <p><strong>Élève :</strong> {{ $student->first_name }} {{ $student->last_name }}</p>
-        <p><strong>Classe :</strong> {{ $student->class->name ?? '---' }}</p>
-        <p><strong>Année scolaire :</strong> {{ now()->year }} - {{ now()->year + 1 }}</p>
-    </div>
+    <h2>Relevé de notes - {{ $student->first_name }} {{ $student->last_name }}</h2>
+    <p>Classe : {{ $student->classes->pluck('name')->join(', ') }}</p>
 
     <table>
         <thead>
             <tr>
                 <th>Matière</th>
                 <th>Note</th>
-                <th>Commentaire</th>
+                <th>Appréciation</th>
+                <th>Trimestre</th>
             </tr>
         </thead>
         <tbody>
-            @forelse($notes ?? [] as $note)
+            @foreach($reportCards as $card)
                 <tr>
-                    <td>{{ $note->subject->name ?? '---' }}</td>
-                    <td>{{ $note->value ?? '—' }}</td>
-                    <td>{{ $note->comment ?? '—' }}</td>
+                    <td>{{ $card->evaluation?->subject?->name ?? '—' }}</td>
+                    <td>{{ $card->general_average }}</td>
+                    <td>{{ $card->appreciation }}</td>
+                    <td>{{ $card->term }}</td>
                 </tr>
-            @empty
-                <tr>
-                    <td colspan="3" class="text-center">Aucune note disponible</td>
-                </tr>
-            @endforelse
+            @endforeach
         </tbody>
     </table>
 
-    <div class="signature">
-        <p>
-            Fait à {{ $student->tenant->city ?? '...' }}, le {{ now()->format('d/m/Y') }}
-        </p>
-        <p>
-            <br>_________________________<br>
-            Signature et cachet
-        </p>
-    </div>
+    <footer>
+        Généré le {{ now()->format('d/m/Y H:i') }} - SekolyPro
+    </footer>
 </body>
 </html>
