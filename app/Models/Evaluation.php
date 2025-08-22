@@ -3,9 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BelongsToTenant;
 
 class Evaluation extends Model
 {
+    use BelongsToTenant;
+    
     protected $fillable = [
         'tenant_id', 'subject_id', 'class_id', 'teacher_id',
         'title', 'type', 'date', 'max_score', 'created_by'

@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory; // ← ajoute ceci
+use App\Models\Traits\BelongsToTenant;
 
 class Classe extends Model
 {
     use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = ['tenant_id', 'name', 'level', 'description'];
 

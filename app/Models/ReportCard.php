@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BelongsToTenant;
 
 class ReportCard extends Model
 {
     use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = [
         'student_id',

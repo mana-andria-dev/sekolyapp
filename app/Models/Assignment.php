@@ -4,10 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\Traits\BelongsToTenant;
 
 class Assignment extends Model
 {
     use HasFactory;
+    use BelongsToTenant;
 
     protected $fillable = [
         'subject_id', 'class_id', 'teacher_id',

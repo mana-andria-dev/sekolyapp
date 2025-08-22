@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Traits\BelongsToTenant;
 
 class Student extends Model
 {
     use HasFactory;
     use Notifiable;
+    use BelongsToTenant;
     
     protected $fillable = [
         'tenant_id',
@@ -27,6 +29,15 @@ class Student extends Model
 
     protected $hidden = ['password', 'remember_token'];
 
+    protected static function booted()
+    {
+        static::addGlobalScope('tenant', function (Builder $builder) {
+            if ($tenant = app('tenant')) {
+                $builder->where('tenant_id', $tenant->id);
+            }
+        });
+    }
+    
     public function tenant()
     {
         return $this->belongsTo(Tenant::class);
