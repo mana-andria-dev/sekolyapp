@@ -9,18 +9,22 @@ class SetTenant
 {
     public function handle($request, Closure $next)
     {
-        // Récupérer le sous-domaine
-        $host = $request->getHost(); // ex: ecole1.sekolypro.com
-        $subdomain = explode('.', $host)[0];
+        $host = $request->getHost(); // demo.sekolyapp.com ou sekolyapp.com
+        $parts = explode('.', $host);
 
-        // Chercher le tenant
-        $tenant = Tenant::where('subdomain', $subdomain)->first();
+        // Vérifier si c’est bien un sous-domaine (ex: demo.sekolyapp.com)
+        if (count($parts) > 2) {
+            $subdomain = $parts[0];
 
-        if ($tenant) {
+            // Charger le tenant
+            $tenant = Tenant::where('subdomain', $subdomain)->first();
+
+            if (! $tenant) {
+                abort(404, 'Tenant not found');
+            }
+
+            // Partager dans l’app
             app()->instance('tenant', $tenant);
-        } else {
-            // Optionnel : empêcher l'accès si tenant non trouvé
-            abort(404, 'Tenant not found');
         }
 
         return $next($request);

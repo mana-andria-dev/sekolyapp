@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Traits\BelongsToTenant;
+use Illuminate\Database\Eloquent\Builder;
 
 class Student extends Model
 {
@@ -31,11 +32,7 @@ class Student extends Model
 
     protected static function booted()
     {
-        static::addGlobalScope('tenant', function (Builder $builder) {
-            if ($tenant = app('tenant')) {
-                $builder->where('tenant_id', $tenant->id);
-            }
-        });
+        static::addGlobalScope(new TenantScope);
     }
     
     public function tenant()
