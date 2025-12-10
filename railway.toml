@@ -1,0 +1,15 @@
+[build]
+builder = "paketobuildpacks/builder:base"
+
+[env]
+APP_ENV = "production"
+APP_KEY = "{{ secrets.APP_KEY }}"
+DB_CONNECTION = "mysql"
+DB_HOST = "{{ secrets.DB_HOST }}"
+DB_PORT = "3306"
+DB_DATABASE = "{{ secrets.DB_DATABASE }}"
+DB_USERNAME = "{{ secrets.DB_USERNAME }}"
+DB_PASSWORD = "{{ secrets.DB_PASSWORD }}"
+
+[deploy]
+start = "php artisan migrate --force && php artisan optimize && php-fpm -F"
